@@ -330,23 +330,26 @@ legend('bottomright', cex=0.6, country,fill=c('blue', 'green', 'red', 'purple', 
 # WEB скрэпинг
 library(rvest)
 
-page <- read_html("C:/Users/Administrator/Desktop/study/big-data/lab4/sputnik.html")
+page <- read_html("https://www.sputnik8.com/ru/moscow")
 cards <- html_nodes(page, ".activity-card_n0wr")
 
 titles <- c()
 links <- c()
+description <- c()
 ratings <- c()
 
 for (card in cards) {
   titles <- c(titles, html_text(html_node(card, ".title_xIA3"), trim = TRUE))
   links <- c(links, paste0("https://www.sputnik8.com", html_attr(html_node(card, "a[role='link']"), "href")))
   ratings <- c(ratings, html_text(html_node(card, ".value-text_1vwc"), trim = TRUE))
+  description <- c(description, html_text(html_node(card, ".description_phiK"), trim = TRUE))
 }
 
 df <- data.frame(
   Название = titles,
   Ссылка = links,
   Рейтинг = ratings,
+  Описание = description,
   stringsAsFactors = FALSE
 )
 
