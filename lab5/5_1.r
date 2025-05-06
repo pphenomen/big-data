@@ -69,6 +69,12 @@ kmeans_result <- kmeans(scaled_data, centers = 3, nstart = 25)
 
 clustered_data <- clean_dataset
 clustered_data$cluster <- as.factor(kmeans_result$cluster)
+# View(clustered_data)
+# write.csv(clustered_data, "clustered_data.csv", row.names = FALSE)
+fviz_cluster(kmeans_result, data = scaled_data, 
+             geom = "point", ellipse.type = "norm",
+             palette = "Set2", ggtheme = theme_minimal(),
+             main = "Визуализация кластеров (k-means)")
 
 g1 <- colMeans(clean_dataset[clustered_data$cluster == 1, ])
 g2 <- colMeans(clean_dataset[clustered_data$cluster == 2, ])
